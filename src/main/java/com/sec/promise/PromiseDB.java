@@ -95,4 +95,44 @@ public class PromiseDB {
 		Debugger.log();
 	}
 
+	public void useServiceInPromise(String promiseID, String serviceName, String serviceWalletAddress, float price) {
+		for(Promise promise: promises) {
+			if(Util.getObjectHash(promise).equals(promiseID)) {
+				promise.useService(serviceName, serviceWalletAddress, price);
+				return;
+			}
+		}
+
+	}
+
+	public boolean isPromiseMember(String promiseID, String memberName) {
+		Debugger.log(promiseID);
+		for(Promise promise: promises) {
+			Debugger.log(promise);
+			Debugger.log(Util.getObjectHash(promise));
+			if(Util.getObjectHash(promise).equals(promiseID) && promise.hasMember(memberName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public ArrayList<String> getPromiseIds(String memberName) {
+		ArrayList<String> promiseIds = new ArrayList<String>();
+		for(Promise promise : promises) {
+			Debugger.log(promise);
+			Debugger.log(Util.getObjectHash(promise));
+			ArrayList<String> participants = promise.getParticipants();
+			for(String name: participants) {
+				if(name.equals(memberName)) {
+					promiseIds.add(Util.getObjectHash(promise));
+					break;
+				}
+				
+			}
+		}
+		return promiseIds;
+
+	}
+
 }

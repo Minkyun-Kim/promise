@@ -12,7 +12,7 @@ public class WebControllerTest {
 	public void testSignIn() {
 		WebController webController = new WebController();
 		webController.signUp("Kim", "Kim");
-		assert(webController.signIn("Kim", "Kim"));
+		assertTrue(webController.signIn("Kim", "Kim"));
 		
 	}
 	
@@ -101,6 +101,56 @@ public class WebControllerTest {
 		PromiseDB.getInstance().showPromisesInfo();
 		Debugger.log("\n");
 		//BlockDB.getInstance().showBlocksInfo();
+	}
+	
+	@Test
+	public static void testMain(String[] args) {
+
+		WebController webController = new WebController();
+		
+		//회원가입 4명
+		webController.signUp("Kim",  "Kim");
+		webController.signUp("Lee",  "Kim");
+		webController.signUp("Park",  "Kim");
+		webController.signUp("Choi",  "Kim");
+		
+		//서비스 1개 생성
+		ServiceDB.getInstance().makeService("cafe", (float)40.0);
+
+		//로그인 1명
+		assertTrue(webController.signIn("Kim", "Kim"));
+
+		//약속 생성. 4명 모두 참가자로 등록
+		Promise promise = new Promise("2019-08-09", "Digital City", (float)10.0 ) ;
+
+		ArrayList<String> participants = new ArrayList<String>();
+		participants.add("Kim");
+		participants.add("Lee");
+		participants.add("Park");
+		participants.add("Choi");
+		promise.setParticipants(participants);
+
+		webController.requestMakePromise(promise);
+
+		//로그인한 사람 약속 조회
+		ArrayList<String> promiseIDs = webController.showPromisesOfMember("Kim");
+
+		//약속 참여
+		assertTrue(webController.joinPromise("Kim", promiseIDs.get(0)).equals("transfered"));
+
+		//소비 가능 목록 출력
+		ArrayList<String> serviceList = webController.showServiceList();
+		for(String serviceInfo: serviceList) {
+			System.out.println(serviceInfo);
+		}
+
+		//약속에서 소비
+		webController.useService("Kim", promiseIDs.get(0), "cafe");
+
+		//전체 출력
+		
+		
+		
 	}
 
 }

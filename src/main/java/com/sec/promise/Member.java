@@ -45,6 +45,10 @@ public class Member {
 		this.wallet.addUtxo(transactionHash, value);
 	}
 	
+	public void transferFund(String promiseWalletAddress, float promiseFund) {
+		wallet.transfer(name + " transfered promise fund ", promiseWalletAddress, promiseFund);
+	}
+
 	public String toString() {
 		String info = "";
 		info += "name: " + name 
@@ -52,13 +56,11 @@ public class Member {
 		for(String promise: promises) {
 			info+= "\npromise: " + promise;
 		}
+		info += wallet.toString();
 		info += "\n";
 		return info;
 	}
 
-	public void transferFund(String promiseWalletAddress, float promiseFund) {
-		wallet.transfer(name + "promise fund ", promiseWalletAddress, promiseFund);
-	}
 	
 
 }

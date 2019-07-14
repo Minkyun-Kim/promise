@@ -68,10 +68,13 @@ public class Wallet {
 			//공용계좌에 회비로 보내는 경우
 			PromiseDB.getInstance().putPromiseUtxo(receiverAddress, Util.getObjectHash(transaction), value);
 		}
-		else {
+		else if(MemberDB.getInstance().findAddress(receiverAddress)){
 			//사람에게 보내는 경우
 			MemberDB.getInstance().putMemberUtxo(receiverAddress, Util.getObjectHash(transaction), value);
 			
+		}
+		else {
+			ServiceDB.getInstance().putMemberUtxo(receiverAddress, Util.getObjectHash(transaction), value);
 		}
 		
 	}

@@ -71,5 +71,17 @@ public class Promise {
 		info += wallet.toString();
 		return info;
 	}
+
+	public void useService(String serviceName, String serviceWalletAddress, float price) {
+		this.wallet.transfer("Service Name: " + serviceName + "\n", serviceWalletAddress, price);
+	}
+
+	public boolean hasMember(String memberName) {
+		for(String participant: participants) {
+			if(participant.equals(memberName))
+				return true;
+		}
+		return false;
+	}
 	
 }

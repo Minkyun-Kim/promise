@@ -91,4 +91,12 @@ public class MemberDB {
 		Debugger.log();
 	}
 
+	public boolean findAddress(String receiverAddress) {
+		for(Member members: members) {
+			if(members.getWalletAddress().equals(receiverAddress))
+				return true;
+		}
+		return false;
+	}
+
 }

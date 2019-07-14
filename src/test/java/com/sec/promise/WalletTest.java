@@ -30,7 +30,7 @@ public class WalletTest {
 		webController.requestMakePromise(promise);
 
 		
-		MemberDB.getInstance().transferMemberFund("Kim", promiseWalletAddress, promiseFund);
+		//MemberDB.getInstance().transferMemberFund("Kim", promiseWalletAddress, promiseFund);
 		
 		
 		
