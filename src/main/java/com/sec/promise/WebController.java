@@ -73,7 +73,7 @@ public class WebController {
 		String promiseWalletAddress = PromiseDB.getInstance().getPromiseWalletAddress(promiseId);
 		float promiseFund = PromiseDB.getInstance().getPromiseFund(promiseId);
 		
-		boolean validTransfer = MemberDB.getInstance().transferMemberCoin(memberName, promiseWalletAddress, promiseFund);
+		boolean validTransfer = MemberDB.getInstance().transferMemberFund(memberName, promiseWalletAddress, promiseFund);
 		if(validTransfer)
 			return "transfered";
 		else

@@ -17,7 +17,7 @@ public class Utxo {
 		return firstUtxo;
 	}
 
-	public ArrayList<Pair<String, Float>> getBalance() {
+	public ArrayList<Pair<String, Float>> getUtxos() {
 		return balance;
 	}
 

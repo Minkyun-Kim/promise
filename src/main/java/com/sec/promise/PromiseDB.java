@@ -32,13 +32,10 @@ public class PromiseDB {
 	 */
 	public String makePromise(String date, String location, float fund, ArrayList<String> participants) {
 		
-
 		Promise promise = new Promise(date, location, fund, participants);
 		promises.add(promise);
 
 		String promiseID = Util.getObjectHash(promise);
-
-		
 
 		return promiseID;
 	}
@@ -57,7 +54,7 @@ public class PromiseDB {
 		for(Promise promise: promises) {
 			String objectHash = Util.getObjectHash(promise);
 			if(objectHash.equals(promiseId));
-			return objectHash;
+			return promise.getWalletAddress();
 		}
 		return null;
 	}
@@ -73,6 +70,7 @@ public class PromiseDB {
 
 	public boolean findAddress(String receiverAddress) {
 		for(Promise promise: promises) {
+			Debugger.log("promise Address: " + promise.getWalletAddress());
 			if(promise.getWalletAddress().equals(receiverAddress))
 				return true;
 		}
@@ -89,13 +87,12 @@ public class PromiseDB {
 		return;
 	}
 
-	/////////////////////////////////////////////////////////////////////////
 	public void showPromisesInfo() {
-		System.out.println();
+		Debugger.log();
 		for(Promise promise: promises) {
-			System.out.println(promise);
+			Debugger.log(promise);
 		}
-		System.out.println();
+		Debugger.log();
 	}
 
 }

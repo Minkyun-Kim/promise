@@ -64,8 +64,13 @@ public class MemberDB {
 		return false;
 	}
 
-	public boolean transferMemberCoin(String memberName, String promiseWalletAddress, float promiseFund) {
-
+	public boolean transferMemberFund(String memberName, String promiseWalletAddress, float promiseFund) {
+		for(Member member: members) {
+			if(member.getName().equals(memberName)) {
+				member.transferFund(promiseWalletAddress, promiseFund);
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -77,14 +82,13 @@ public class MemberDB {
 		}
 	}
 	
-	/////////////////////////////////////////////////////////////////////////////////////
 	public void showMembersInfo() {
-		System.out.println();
-		System.out.println("Information of Members");
+		Debugger.log();
+		Debugger.log("Information of Members");
 		for(Member member: members) {
-			System.out.println(member);
+			Debugger.log(member);
 		}
-		System.out.println();
+		Debugger.log();
 	}
 
 }

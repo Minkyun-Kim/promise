@@ -35,11 +35,24 @@ public class BlockDB {
 	public void addBlockChain() {
 		Block block = new Block();
 		for(int i = 0; i < transactionPerBlock; i++) {
+			Debugger.log(transactionQueue.get(0));
 			block.addTransaction(transactionQueue.get(0));
 			transactionQueue.remove(0);
 		}
 		block.makeBlock(Util.getObjectHash(blocks.get(blocks.size()-1)));
 		blocks.add(block);
+		Debugger.log("blockchain size: " + blocks.size());
 	}
 
+	public void showBlocksInfo() {
+		Debugger.log("\n");
+		Debugger.log("////////////////BlockChain////////////////");
+		for(Block block : blocks) {
+			Debugger.log(block);
+		}
+		Debugger.log("////////////////Transaction Queue////////////////");
+		for(Transaction transaction : transactionQueue) {
+			Debugger.log(transaction);
+		}
+	}
 }

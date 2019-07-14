@@ -18,6 +18,7 @@ public class WebControllerTest {
 	
 	@Test
 	public void testShowPromisesOfMember() {
+		Debugger.setValid();
 		WebController webController = new WebController();
 		webController.signUp("Kim", "Kim");
 		webController.signUp("Lee", "Lee");
@@ -41,43 +42,65 @@ public class WebControllerTest {
 		promise2.setParticipants(participants2);
 
 		
-		System.err.println("Kim's promises");
+		Debugger.log("Kim's promises");
 		webController.requestMakePromise(promise1);
 		ArrayList<String> promisesInfo = webController.showPromisesOfMember("Kim");
 		for(String info: promisesInfo) {
 			System.err.println(info);
+			Debugger.log(info);
 		}
-		System.err.println();
+		Debugger.log("\n");
 		
-		
-		System.err.println("Choi's promises");
+		Debugger.log("Choi's promises");
 		webController.requestMakePromise(promise2);
 		promisesInfo = webController.showPromisesOfMember("Choi");
 		for(String info: promisesInfo) {
-			System.err.println(info);
+			Debugger.log(info);
 		}
-		System.err.println();
+		Debugger.log("\n");
 	}
 	
 	@Test
 	public void testJoinPromise() {
+		Debugger.setValid();
 		WebController webController = new WebController();
 
 		webController.signUp("Kim",  "Kim");
 		webController.signUp("Lee",  "Lee");
+		webController.signUp("Park", "Park");
+		webController.signUp("Son", "Son");
 
-		Promise promise = new Promise("2019-08-09", "Digital City", (float)10000.0 ) ;
+		Promise promise = new Promise("2019-08-09", "Digital City", (float)10.0 ) ;
 
 		ArrayList<String> participants = new ArrayList<String>();
 		participants.add("Kim");
 		participants.add("Lee");
+		participants.add("Park");
+		participants.add("Son");
 		promise.setParticipants(participants);
 
 		webController.requestMakePromise(promise);
-		ArrayList<String> promisesInfo = webController.showPromisesOfMember("Kim");
 
+		//MemberDB.getInstance().showMembersInfo();
+		//PromiseDB.getInstance().showPromisesInfo();
+		
+		
+		ArrayList<String> promisesInfo = webController.showPromisesOfMember("Kim");
+		String promiseID = promisesInfo.get(0);
+		String promiseWalletAddress = PromiseDB.getInstance().getPromiseWalletAddress(promiseID);
+		float promiseFund = PromiseDB.getInstance().getPromiseFund(promiseID);
+		MemberDB.getInstance().transferMemberFund("Kim", promiseWalletAddress, promiseFund);
+		MemberDB.getInstance().transferMemberFund("Lee", promiseWalletAddress, promiseFund);
+		MemberDB.getInstance().transferMemberFund("Park", promiseWalletAddress, promiseFund);
+		MemberDB.getInstance().transferMemberFund("Son", promiseWalletAddress, promiseFund);
+		
+		
+		Debugger.log("\n");
 		MemberDB.getInstance().showMembersInfo();
+		Debugger.log("\n");
 		PromiseDB.getInstance().showPromisesInfo();
+		Debugger.log("\n");
+		//BlockDB.getInstance().showBlocksInfo();
 	}
 
 }

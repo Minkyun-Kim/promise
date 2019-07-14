@@ -20,8 +20,8 @@ public class Transaction {
 
 	public String toString() {
 		return "content: " + content
-				+"value: " + value
-				+ "\ntimestamp: " + timestamp
-				+ "\n";
+		 	+"\nvalue: " + value
+		 	+ "\ntimestamp: " + timestamp
+		 	+ "\n";
 	}
 }

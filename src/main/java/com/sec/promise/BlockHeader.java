@@ -19,32 +19,6 @@ public class BlockHeader {
 		this.merkleTreeRootHash = merkleTreeRootHash;
 		timestamp = System.currentTimeMillis();
 	}
-	/*
-	public String getPrevBlockHash() {
-		return prevBlockHash;
-	}
-
-	public void setPrevBlockHash(String prevBlockHash) {
-		this.prevBlockHash = prevBlockHash;
-	}
-
-	public String getMerkleTreeRootHash() {
-		return merkleTreeRootHash;
-	}
-
-	public void setMerkleTreeRootHash(String merkleTreeRootHash) {
-		this.merkleTreeRootHash = merkleTreeRootHash;
-	}
-
-	public long getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(long timestamp) {
-		this.timestamp = timestamp;
-	}
-	
-	*/
 	public String toString() {
 		return "previous block hash: " + prevBlockHash
 				+ "\nmerkle tree root hash: " + merkleTreeRootHash

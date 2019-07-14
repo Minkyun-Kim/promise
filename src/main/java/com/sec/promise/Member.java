@@ -13,7 +13,7 @@ public class Member {
 	public Member(String name, String password) {
 		this.name = name;
 		this.password = password;
-		this.wallet.setCoin((float)10.0);
+		this.wallet.setCoin(name, (float)10.0);
 
 	}
 
@@ -54,6 +54,10 @@ public class Member {
 		}
 		info += "\n";
 		return info;
+	}
+
+	public void transferFund(String promiseWalletAddress, float promiseFund) {
+		wallet.transfer(name + "promise fund ", promiseWalletAddress, promiseFund);
 	}
 	
 

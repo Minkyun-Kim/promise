@@ -12,6 +12,7 @@ public class Block {
 	public String toString() {
 		String sentence =  blockHeader.toString();
 		for(Transaction transaction: transactions) {
+			sentence += "Transaction ID: " + Util.getObjectHash(transaction)+"\n";
 			sentence += transaction.toString();
 		}
 		return sentence;
