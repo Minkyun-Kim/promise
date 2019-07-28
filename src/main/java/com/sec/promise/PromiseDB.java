@@ -2,6 +2,8 @@ package com.sec.promise;
 
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+
 /**
  * Singleton class
  * This class is Promise database
@@ -35,16 +37,16 @@ public class PromiseDB {
 		Promise promise = new Promise(date, location, fund, participants);
 		promises.add(promise);
 
-		String promiseID = Util.getObjectHash(promise);
+		String promiseId = promise.getPromiseId();
 
-		return promiseID;
+		return promiseId;
 	}
 
-	public String getPromiseInfo(String promiseID) {
+	public String getPromiseInfo(String promiseId) {
 		String info = null;
 		for(Promise promise : promises) {
-			if(Util.getObjectHash(promise).equals(promiseID)) {
-				 info = promise.toString();
+			if(promise.getPromiseId().equals(promiseId)) {
+				 info = new Gson().toJson(promise);
 			}
 		}
 		return info;
@@ -52,8 +54,7 @@ public class PromiseDB {
 
 	public String getPromiseWalletAddress(String promiseId) {
 		for(Promise promise: promises) {
-			String objectHash = Util.getObjectHash(promise);
-			if(objectHash.equals(promiseId));
+			if(promise.getPromiseId().equals(promiseId));
 			return promise.getWalletAddress();
 		}
 		return null;
@@ -61,8 +62,7 @@ public class PromiseDB {
 
 	public float getPromiseFund(String promiseId) {
 		for(Promise promise: promises) {
-			String objectHash = Util.getObjectHash(promise);
-			if(objectHash.equals(promiseId));
+			if(promise.getPromiseId().equals(promiseId));
 			return promise.getFund();
 		}
 		return 0;
@@ -97,7 +97,7 @@ public class PromiseDB {
 
 	public void useServiceInPromise(String promiseID, String serviceName, String serviceWalletAddress, float price) {
 		for(Promise promise: promises) {
-			if(Util.getObjectHash(promise).equals(promiseID)) {
+			if(promise.getPromiseId().equals(promiseID)) {
 				promise.useService(serviceName, serviceWalletAddress, price);
 				return;
 			}
@@ -109,8 +109,8 @@ public class PromiseDB {
 		Debugger.log(promiseID);
 		for(Promise promise: promises) {
 			Debugger.log(promise);
-			Debugger.log(Util.getObjectHash(promise));
-			if(Util.getObjectHash(promise).equals(promiseID) && promise.hasMember(memberName)) {
+			Debugger.log(promise.getPromiseId());
+			if(promise.getPromiseId().equals(promiseID) && promise.hasMember(memberName)) {
 				return true;
 			}
 		}
@@ -121,11 +121,11 @@ public class PromiseDB {
 		ArrayList<String> promiseIds = new ArrayList<String>();
 		for(Promise promise : promises) {
 			Debugger.log(promise);
-			Debugger.log(Util.getObjectHash(promise));
+			Debugger.log(promise.getPromiseId());
 			ArrayList<String> participants = promise.getParticipants();
 			for(String name: participants) {
 				if(name.equals(memberName)) {
-					promiseIds.add(Util.getObjectHash(promise));
+					promiseIds.add(promise.getPromiseId());
 					break;
 				}
 				

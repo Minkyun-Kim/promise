@@ -1,0 +1,103 @@
+        body{
+            background-image: url("../img/background.png");
+            background-size:cover;
+            background-repeat:no-repeat;
+            margin:0;
+            height:700px;
+        }
+        header{
+            width:100%;
+            margin-left:auto;
+            margin-right:auto;
+        }
+        nav{
+            width:100%;
+            height:70px;
+            margin:0;
+            border:black;
+        }
+        #container{
+
+        }
+        #serviceName{
+            text-decoration: none;
+            float: left;
+            font-size:25px;
+            color:white;
+            padding-top:20px;
+            padding-left:20px;
+        }
+        #myPromise{
+            text-decoration: none;
+            float:right;
+            padding-top:20px;
+            padding-right:20px;
+            font-size:25px;
+            color:white;
+        }
+        #sectionSentence{
+            float:left;
+            width:40%;
+            height:500px;
+        }
+        #promiseexplanation{
+            text-align:left; 
+            color:white;
+            width: 450px;
+            font-size:45px;
+            padding-top:250px;
+            padding-left:10%;
+        }
+        #heading{
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        #explan{
+            font-size:30px;
+            font-weight: normal;
+        }
+        #makepromise{
+            float:right;
+            width:60%;
+            height:500px;
+        }
+        #tablename{
+            font-size:32px;
+            margin-top:20px;
+            margin-left:10%;
+            margin-right:10%;
+            text-align:center;
+        }
+        fieldset{
+            background-color:white;
+            border:none;
+            border-radius:8px;
+            box-shadow:1px 11px 68px -20px #000000;
+            margin-top:200px;
+            margin-left:20%;
+            margin-right:20%;
+        }
+        .input-box{
+            text-align: center;
+        }
+        ul{
+            padding:0px;
+        }
+        input{
+            background-color:#F2F2F2;
+            padding: 8px 12px;
+            margin: 6px;
+            width:200px;
+            border:none;
+        }
+        #submitDiv{
+            text-align:center;
+
+        }
+        #clickButton{
+            margin: 0 auto;
+            background-color:#1D82FF;
+            border-radius: 30px;
+            color:white;
+            font-size:20px;
+        }

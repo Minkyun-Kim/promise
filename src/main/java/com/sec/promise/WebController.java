@@ -2,6 +2,15 @@ package com.sec.promise;
 
 import java.util.ArrayList;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@CrossOrigin(origins="*")
 public class WebController {
 
 	
@@ -11,8 +20,9 @@ public class WebController {
 	 * @param name
 	 * @param password
 	 */
-	public void signUp(String name, String password) {
-		MemberDB.getInstance().signUpMember(name, password);
+	public static void signUp(SignInfo signInfo) {
+		Debugger.log("[signUp] " + signInfo.getName() + " signed up");
+		MemberDB.getInstance().signUpMember(signInfo.getName(), signInfo.getPassword());
 	}
 	
 	/**
@@ -34,28 +44,37 @@ public class WebController {
 	 * 
 	 * @param promise: contain the information of the requested promise
 	 */
-	public void requestMakePromise(Promise promise) {
+	@RequestMapping(value="/createPromise", method=RequestMethod.POST)
+	public void requestMakePromise(@RequestBody PromiseInfo promiseInfo) {
+		Debugger.log("[requestMakePromise] " + promiseInfo.toString());
 		
 		PromiseDB promiseDB = PromiseDB.getInstance();
 		String promiseID = promiseDB.makePromise(
-				promise.getDate(), 
-				promise.getLocation(), 
-				promise.getFund(), 
-				promise.getParticipants());
+				promiseInfo.getDate(), 
+				promiseInfo.getLocation(), 
+				promiseInfo.getFund(), 
+				promiseInfo.getParticipants());
 		
 		MemberDB memberDB = MemberDB.getInstance();
-		memberDB.enrollPromiseToMember(promiseID, promise.getParticipants());
+		memberDB.enrollPromiseToMember(promiseID, promiseInfo.getParticipants());
 	}
 	
-	/**
-	 * 약속 조회 기능
-	 * 
-	 * when the <Show Member's Promises> requested,
-	 * First, get Promise ids of Member from MemberDB
-	 * Second, get Promises information from PromiseDB
-	 * @param name
-	 */
-	public ArrayList<String> showPromisesOfMember(String name) {
+	@RequestMapping(value="showUnjoinPromisesOfMember", method = RequestMethod.GET)
+	public ArrayList<String> showUnjoinPromisesOfMember(@RequestParam String name) {
+		Debugger.log("[showUnjoinPromises] " + name);
+		MemberDB memberdb = MemberDB.getInstance();
+		ArrayList<String> promiseIDs = memberdb.getMemberPromises(name);
+		ArrayList<String> promiseInfoList = new ArrayList<String>();
+		PromiseDB promiseDb = PromiseDB.getInstance();
+		for(String promiseID : promiseIDs){
+			promiseInfoList.add(promiseDb.getPromiseInfo(promiseID));
+		}
+		return promiseInfoList;
+	}
+
+	@RequestMapping(value="showJoinPromisesOfMember", method = RequestMethod.GET)
+	public ArrayList<String> showJoinPromisesOfMember(@RequestParam String name) {
+		Debugger.log("[showJoinPromises] " + name);
 		MemberDB memberdb = MemberDB.getInstance();
 		ArrayList<String> promiseIDs = memberdb.getMemberPromises(name);
 		ArrayList<String> promiseInfoList = new ArrayList<String>();
@@ -75,15 +94,24 @@ public class WebController {
 	 * @param promiseId
 	 * @return
 	 */
-	public String joinPromise(String memberName, String promiseId) {
-		String promiseWalletAddress = PromiseDB.getInstance().getPromiseWalletAddress(promiseId);
-		float promiseFund = PromiseDB.getInstance().getPromiseFund(promiseId);
+	@RequestMapping(value="joinPromise", method = RequestMethod.PUT)
+	public String joinPromise(@RequestBody JoinPromiseInfo joinPromiseInfo) {
+		Debugger.log("[joinPromise] " + joinPromiseInfo);
+
+		String promiseWalletAddress = PromiseDB.getInstance().getPromiseWalletAddress(joinPromiseInfo.getPromiseId());
+		float promiseFund = PromiseDB.getInstance().getPromiseFund(joinPromiseInfo.getPromiseId());
 		
-		boolean validTransfer = MemberDB.getInstance().transferMemberFund(memberName, promiseWalletAddress, promiseFund);
+		boolean validTransfer = MemberDB.getInstance().transferMemberFund(joinPromiseInfo.getName(), promiseWalletAddress, promiseFund);
 		if(validTransfer)
 			return "transfered";
 		else
 			return "fail";
+	}
+	
+	@RequestMapping(value="showBlocks", method=RequestMethod.GET)
+	public String showBlocks() {
+		Debugger.log("[showBlock] ");
+		return BlockDB.getInstance().showBlocksInfo();
 	}
 	
 	/**
@@ -109,7 +137,7 @@ public class WebController {
 		}
 	}
 	
-	
+/*	
 	public static void main(String[] args) {
 
 		WebController webController = new WebController();
@@ -197,12 +225,8 @@ public class WebController {
 		ServiceDB.getInstance().showServiceInfo();
 		Debugger.log();
 		Debugger.setInvalid();
-		
-		
-
-		
-		
 	}
+	*/
 
 
 

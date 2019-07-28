@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Promise {
 	
+	private String promiseId;
 	private Wallet wallet;
 	private String date;
 	private String location;
@@ -17,6 +18,7 @@ public class Promise {
 		this.location = location;
 		this.fund = fund;
 		this.wallet = new Wallet();
+		this.promiseId = Util.getObjectHash(this);
 	}
 
 	public Promise(String date, String location, float fund, ArrayList<String> participants) {
@@ -25,9 +27,17 @@ public class Promise {
 		this.fund = fund;
 		this.participants = participants;
 		this.wallet = new Wallet();
+		this.promiseId = Util.getObjectHash(this);
 	}
 	
-	
+	public String getPromiseId() {
+		return promiseId;
+	}
+
+	public void setPromiseId(String promiseId) {
+		this.promiseId = promiseId;
+	}
+
 	public String getLocation() {
 		return location;
 	}
