@@ -1,5 +1,7 @@
 package com.sec.promise;
 
+import com.google.gson.Gson;
+
 public class Transaction {
 	
 	private String content;
@@ -19,9 +21,6 @@ public class Transaction {
 
 
 	public String toString() {
-		return "content: " + content
-		 	+"\nvalue: " + value
-		 	+ "\ntimestamp: " + timestamp
-		 	+ "\n";
+		return new Gson().toJson(this);
 	}
 }

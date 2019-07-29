@@ -4,30 +4,30 @@ import java.util.ArrayList;
 
 public class BlockHeader {
 
-	private String prevBlockHash;
-	private String merkleTreeRootHash;
+	private String hashPrevBlock;
+	private String hashMerkleRoot;
 	private long timestamp;
 	
 	public BlockHeader() {
-		prevBlockHash = "";
-		merkleTreeRootHash = "";
+		hashPrevBlock = "";
+		hashMerkleRoot = "";
 		timestamp = System.currentTimeMillis();
 	}
 	
 	public BlockHeader(String prevBlockHash, String merkleTreeRootHash) {
-		this.prevBlockHash = prevBlockHash;
-		this.merkleTreeRootHash = merkleTreeRootHash;
+		this.hashPrevBlock = prevBlockHash;
+		this.hashMerkleRoot = merkleTreeRootHash;
 		timestamp = System.currentTimeMillis();
 	}
 	public String toString() {
-		return "previous block hash: " + prevBlockHash
-				+ "\nmerkle tree root hash: " + merkleTreeRootHash
+		return "previous block hash: " + hashPrevBlock
+				+ "\nmerkle tree root hash: " + hashMerkleRoot
 				+ "\ntimestamp: " + timestamp
 				+ "\n";
 	}
 
 	public void setPrevBlockHash(String prevBlockHash) {
-		this.prevBlockHash = prevBlockHash;
+		this.hashPrevBlock = prevBlockHash;
 		
 	}
 
@@ -46,7 +46,7 @@ public class BlockHeader {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
-		this.merkleTreeRootHash = Util.getObjectHash(transactions);
+		this.hashMerkleRoot = Util.getObjectHash(transactions);
 		
 	}
 

@@ -2,8 +2,10 @@ package com.sec.promise;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.gson.Gson;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PromiseInfo {
 
 	private String date;

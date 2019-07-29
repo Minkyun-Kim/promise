@@ -3,6 +3,14 @@ function showAvailablePromises(){
     서버로부터 참여 가능한 약속 정보 가져오기
 
     */
+   var request = new XMLHttpRequest();
+   request.open('GET', 'http://localhost:8080/showUnjoinPromiseOfMember?name=Kim');
+   request.onload = function(){
+       availablePromiseArray = JSON.parse(request.responseText);
+   }
+   request.send();
+
+   var availablePromise = JSON.parse(availablePromiseArray[0]);
 
     //table 삽입
 
@@ -62,6 +70,9 @@ function showAvailablePromises(){
     participateButton.setAttribute("value", "참가하기");
     participateButton.setAttribute("id", "participateButton");
     participateButton.setAttribute("onclick", "participatePromise();return false");
+    participateButton.addEventListener('click', function(){
+        participatePromise("Kim", availablePromise.promiseId)
+    });
     participateButton.setAttribute("background-color", "#1D82FF");
     participateButton.setAttribute("font-color", "white");
 
@@ -71,10 +82,36 @@ function showAvailablePromises(){
     fieldsetElement.appendChild(participateButton);
 
 }
+function participatePromise(name, promiseId){
+    var realName = prompt("성함을 입력해주세요");
+    if(confirm("회비를 납부하고 모임에 참여하시겠습니까?")){
+        var body = {
+            "name":realName,
+            "promiseId": promiseId
+        };
+        var request = new XMLHttpRequest();
+        request.open('PUT', 'http://localhost:8080/joinPromise', false);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        request.onload = function(){
+            var data = JSON.parse(request.responseText);
+        }
+        request.send(JSON.stringify(body));
+        alert("모임에 참여 하셨습니다");  
+        location.href= "myPromises.html";
+    }
+}
 
 
 
 function showParticipatedPromises(){
+
+    var request = new XMLHttpRequest();
+    request.open('GET', 'http://localhost:8080/showjoinPromisesOfMember?name=Kim', false);
+    request.onload = function(){
+        availablePromiseArray = JSON.parse(request.responseText);
+        console.log(JSON.parse(availablePromisesArray[0].date));
+    }
+
     var tableRoot = document.createElement("table");
     tableRoot.setAttribute("border", "1px;");
     tableRoot.setAttribute("border-collapse", "collapse");
@@ -132,15 +169,13 @@ function showParticipatedPromises(){
     participateButton.setAttribute("id", "showBlockChainButton");
     participateButton.setAttribute("background-color", "#1D82FF");
     participateButton.setAttribute("font-color", "#000000");
+    participateButton.setAttribute('onclick', 'goToShowBlock(); return false');
 
     var fieldsetElement = document.querySelector("#participatedFieldset");
     fieldsetElement.appendChild(tableRoot);
     fieldsetElement.appendChild(participateButton);
 }
 
-function participatePromise(){
-    if(confirm("회비를 내고 모임에 참여 하시겠습니까?")){
-        alert("모임에 참여하셨습니다.")
-        location.href="mypromises.html";
-    }
+function goToShowBlock(){
+    location.href="showBlock.html";
 }

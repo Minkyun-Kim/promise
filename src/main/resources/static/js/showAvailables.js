@@ -4,7 +4,7 @@ function showAvailablePromises(){
 
     */
    var request = new XMLHttpRequest();
-   request.open('GET', 'http://localhost:8080/showUnjoinPromiseOfMember?name=Kim');
+   request.open('GET', 'http://localhost:8080/showUnjoinPromisesOfMember?name=Kim', false);
    request.onload = function(){
        availablePromiseArray = JSON.parse(request.responseText);
    }
@@ -25,7 +25,7 @@ function showAvailablePromises(){
     var dateHeaderText = document.createTextNode("Date");
     dateHeader.appendChild(dateHeaderText);
     var dateData = document.createElement("th");
-    var dateDataText = document.createTextNode("2019-07-21");
+    var dateDataText = document.createTextNode(availablePromise.date);
     dateData.appendChild(dateDataText);
     dateRow.appendChild(dateHeader);
     dateRow.appendChild(dateData);
@@ -35,7 +35,7 @@ function showAvailablePromises(){
     var locationHeaderText = document.createTextNode("Location");
     locationHeader.appendChild(locationHeaderText);
     var locationData = document.createElement("th");
-    var locationDataText = document.createTextNode("Seoul");
+    var locationDataText = document.createTextNode(availablePromise.location);
     locationData.appendChild(locationDataText);
     locationRow.appendChild(locationHeader);
     locationRow.appendChild(locationData);
@@ -45,7 +45,7 @@ function showAvailablePromises(){
     var fundHeaderText = document.createTextNode("Fund");
     fundHeader.appendChild(fundHeaderText);
     var fundData = document.createElement("th");
-    var fundDataText = document.createTextNode("10 coins");
+    var fundDataText = document.createTextNode(availablePromise.fund + " coins");
     fundData.appendChild(fundDataText);
     fundRow.appendChild(fundHeader);
     fundRow.appendChild(fundData);
@@ -55,7 +55,7 @@ function showAvailablePromises(){
     var participantHeaderText = document.createTextNode("Participant");
     participantHeader.appendChild(participantHeaderText);
     var participantData = document.createElement("th");
-    var participantDataText = document.createTextNode("Kim Lee Choi Park");
+    var participantDataText = document.createTextNode(availablePromise.participants);
     participantData.appendChild(participantDataText);
     participantRow.appendChild(participantHeader);
     participantRow.appendChild(participantData);
@@ -69,7 +69,6 @@ function showAvailablePromises(){
     participateButton.setAttribute("type", "submit");
     participateButton.setAttribute("value", "참가하기");
     participateButton.setAttribute("id", "participateButton");
-    participateButton.setAttribute("onclick", "participatePromise();return false");
     participateButton.addEventListener('click', function(){
         participatePromise("Kim", availablePromise.promiseId)
     });
@@ -106,11 +105,13 @@ function participatePromise(name, promiseId){
 function showParticipatedPromises(){
 
     var request = new XMLHttpRequest();
-    request.open('GET', 'http://localhost:8080/showjoinPromisesOfMember?name=Kim', false);
+    request.open('GET', 'http://localhost:8080/showJoinPromisesOfMember?name=Kim', false);
     request.onload = function(){
         availablePromiseArray = JSON.parse(request.responseText);
         console.log(JSON.parse(availablePromisesArray[0].date));
     }
+    request.send();
+    var availablePromise = JSON.parse(availablePromiseArray[0]);
 
     var tableRoot = document.createElement("table");
     tableRoot.setAttribute("border", "1px;");
