@@ -7,7 +7,7 @@ function requestMakePromise(){
     
     var body = {
         "date":date,
-        "locatoin":location,
+        "location":location,
         "fund":fund,
         "participants":participants
     };

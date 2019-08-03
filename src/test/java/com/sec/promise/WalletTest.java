@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import com.sec.blockchain.BlockDB;
+import com.sec.controller.WebController;
+import com.sec.user.Promise;
+
 public class WalletTest {
 
 	@Test
